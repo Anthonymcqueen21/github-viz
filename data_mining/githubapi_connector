@@ -1,0 +1,92 @@
+import json
+import requests
+import csv
+
+# Put your access token here
+access_token = '55e4a70890697a709810bee9f7a867681108192f'
+max_page = 135
+limit = 500
+
+class GithubAPI(object):
+    prefix_url = 'https://api.github.com'
+    default_fields = ['login', 'id']
+
+    def __init__(self, access_token):
+        self.access_token = access_token
+        self.max_page = max_page
+        self.limit = limit
+
+    def get_request(self, path, params={}):
+        params['access_token'] = self.access_token
+        url = self.prefix_url + path
+        # Make a request with the given url and parameters 
+        # Return the JSON form of the request
+        r = requests.get(url, params=params)
+        return r.json()
+
+    def get_user(self, start_id, fields=None):
+        # Define the path (i.e., the url)
+        path = '/users'
+        if not fields:
+            fields = GithubAPI.default_fields
+            print fields
+        return self.get_request(path, {'fields': ','.join(fields), 'per_page': self.max_page, 'since': start_id})
+    # def get_board_pins(self, board, fields=None):
+    #     # Define the path (i.e., the url)
+    #     path = 'boards/' + board + '/pins'
+    #     if not fields:
+    #         fields = PinterestAPI.default_fields
+    #     return self.get_request(path, {'fields': ','.join(fields)})
+
+    def get_all_users(self, fields=None):
+        data = []
+        start_id = 0;
+
+        while (start_id < self.limit):
+            data += self.get_user(start_id);
+            start_id += self.max_page;
+
+        # print data
+        return data
+
+def main():
+    # Create a PinterestAPI object
+    # Perform a request on the board 'bdatascience/ikea-lab' using get_board_pins
+    # Take a look at how many pins you found using len(<request JSON>['data'])
+    # Now, use get_all_board_pins to get *all* of the board's pins
+    # The following will save your pins to a file, assuming your pins are in
+    # a variable called pins
+    githubAPI = GithubAPI(access_token)
+    users = githubAPI.get_all_users()
+
+    with open('users_logins.csv', 'wb') as f_csv:
+        writer = csv.writer(f_csv)
+    # Write CSV Header, If you dont need that, remove this line
+        writer.writerow(["login", "id"])
+        for user in users:
+            writer.writerow([user['login'].encode('utf-8'), user['id']])
+
+
+    # with open('users.json', 'w') as f:
+    #     # users_login = [{}]
+    #     json.dump({},f)
+
+    #     json.dump(users, f)
+
+    # users_logins = 
+    # for user in users:
+    #     print user['login']
+    #     # dct = json.load(users)
+        # print dct['login'].keys()
+
+  
+
+    # json_file = open('users.json')
+    # dct = json.load(users)
+    # print dct['login'].keys()
+    
+
+   # __name__ == '__main__' when this script is run via `python pinterest.py`
+# Unlike some languages, main() isn't automatically called, so we do it ourselves.
+if __name__ == '__main__':
+    main()
