@@ -3,13 +3,13 @@ import requests
 import csv
 
 # Put your access token here
-access_token = '55e4a70890697a709810bee9f7a867681108192f'
-max_page = 135
-limit = 500
+access_token = ''   # put your github authentication token here
+max_page = 135  # users we can extract per Github query
+limit = 5000     # this indicates the number of users we want to extract; Github users ~ 1.5-2 million
 
 class GithubAPI(object):
     prefix_url = 'https://api.github.com'
-    default_fields = ['login', 'id']
+    default_fields = ['login', 'id']        # this is not yet working; it always extracts all properties
 
     def __init__(self, access_token):
         self.access_token = access_token
@@ -31,12 +31,6 @@ class GithubAPI(object):
             fields = GithubAPI.default_fields
             print fields
         return self.get_request(path, {'fields': ','.join(fields), 'per_page': self.max_page, 'since': start_id})
-    # def get_board_pins(self, board, fields=None):
-    #     # Define the path (i.e., the url)
-    #     path = 'boards/' + board + '/pins'
-    #     if not fields:
-    #         fields = PinterestAPI.default_fields
-    #     return self.get_request(path, {'fields': ','.join(fields)})
 
     def get_all_users(self, fields=None):
         data = []
@@ -45,8 +39,6 @@ class GithubAPI(object):
         while (start_id < self.limit):
             data += self.get_user(start_id);
             start_id += self.max_page;
-
-        # print data
         return data
 
 def main():
@@ -61,30 +53,10 @@ def main():
 
     with open('users_logins.csv', 'wb') as f_csv:
         writer = csv.writer(f_csv)
-    # Write CSV Header, If you dont need that, remove this line
         writer.writerow(["login", "id"])
         for user in users:
+            # here we choose the properties of a user we decide to record into the .csv file
             writer.writerow([user['login'].encode('utf-8'), user['id']])
-
-
-    # with open('users.json', 'w') as f:
-    #     # users_login = [{}]
-    #     json.dump({},f)
-
-    #     json.dump(users, f)
-
-    # users_logins = 
-    # for user in users:
-    #     print user['login']
-    #     # dct = json.load(users)
-        # print dct['login'].keys()
-
-  
-
-    # json_file = open('users.json')
-    # dct = json.load(users)
-    # print dct['login'].keys()
-    
 
    # __name__ == '__main__' when this script is run via `python pinterest.py`
 # Unlike some languages, main() isn't automatically called, so we do it ourselves.
