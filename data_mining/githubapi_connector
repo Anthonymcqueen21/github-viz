@@ -7,6 +7,9 @@ access_token = ''   # put your github authentication token here
 max_page = 135  # users we can extract per Github query
 limit = 5000     # this indicates the number of users we want to extract; Github users ~ 1.5-2 million
 
+repo_name = 'pacman'  # keywords of the repositories we want to search for
+csv_name = 'repo.csv'
+
 class GithubAPI(object):
     prefix_url = 'https://api.github.com'
     default_fields = ['login', 'id']        # this is not yet working; it always extracts all properties
@@ -34,31 +37,42 @@ class GithubAPI(object):
 
     def get_all_users(self, fields=None):
         data = []
-        start_id = 0;
+        start_id = 0
 
         while (start_id < self.limit):
-            data += self.get_user(start_id);
-            start_id += self.max_page;
+            data += self.get_user(start_id)
+            start_id += self.max_page
         return data
 
+    def get_repositories(self, keywords):
+        path = '/search/repositories?q=' + keywords
+        r = self.get_request(path)
+        return r['items']
+
 def main():
-    # Create a PinterestAPI object
+    # Create a GithubAPI object
     # Perform a request on the board 'bdatascience/ikea-lab' using get_board_pins
     # Take a look at how many pins you found using len(<request JSON>['data'])
     # Now, use get_all_board_pins to get *all* of the board's pins
     # The following will save your pins to a file, assuming your pins are in
     # a variable called pins
     githubAPI = GithubAPI(access_token)
-    users = githubAPI.get_all_users()
 
-    with open('users_logins.csv', 'wb') as f_csv:
+    # users = githubAPI.get_all_users()
+    #
+    # with open('users_logins.csv', 'wb') as f_csv:
+    #     writer = csv.writer(f_csv)
+    #     writer.writerow(["login", "id"])
+    #     for user in users:
+    #         # here we choose the properties of a user we decide to record into the .csv file
+    #         writer.writerow([user['login'].encode('utf-8'), user['id']])
+
+    with open(csv_name, "wb") as f_csv:
         writer = csv.writer(f_csv)
-        writer.writerow(["login", "id"])
-        for user in users:
-            # here we choose the properties of a user we decide to record into the .csv file
-            writer.writerow([user['login'].encode('utf-8'), user['id']])
+        writer.writerow(["id", "name", "forks", "stars", "size"])
+        for repo in githubAPI.get_repositories(repo_name):
+            writer.writerow([repo['id'], repo['name'], repo['forks'], repo['watchers'], repo['size']])
 
-   # __name__ == '__main__' when this script is run via `python pinterest.py`
-# Unlike some languages, main() isn't automatically called, so we do it ourselves.
+
 if __name__ == '__main__':
     main()
