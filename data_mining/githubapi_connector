@@ -3,7 +3,7 @@ import requests
 import csv
 
 # Put your access token here
-access_token = ''   # put your github authentication token here
+access_token = '71315f773eb1fb42260dc84712bee0ac7c844e73'   # put your github authentication token here
 max_page = 135  # users we can extract per Github query
 limit = 5000     # this indicates the number of users we want to extract; Github users ~ 1.5-2 million
 
@@ -69,9 +69,9 @@ def main():
 
     with open(csv_name, "wb") as f_csv:
         writer = csv.writer(f_csv)
-        writer.writerow(["id", "name", "forks", "stars", "size"])
+        writer.writerow(["id", "name", "html_url" "forks", "stars", "size"])
         for repo in githubAPI.get_repositories(repo_name):
-            writer.writerow([repo['id'], repo['name'], repo['forks'], repo['watchers'], repo['size']])
+            writer.writerow([repo['id'], repo['name'], repo['html_url'], repo['forks'], repo['watchers'], repo['size']])
 
 
 if __name__ == '__main__':
