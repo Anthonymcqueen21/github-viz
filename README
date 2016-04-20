@@ -1,1 +1,4 @@
 # github-viz
+
+
+How to run the server: when you navigate to the project, run "./run" in the terminal. Then go to a browser and type "localhost:4567" in the URL field. Our page should pop up, being hosted by our local Spark server.
