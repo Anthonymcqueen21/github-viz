@@ -1,7 +1,6 @@
-README for githubapi_connector
-Author: Ivaylo Petrov
-Login: ipetrov
+[README]
 
-Put your Github API token on line 6 to make the code work!
+1. Put your Github access token in the access_token variable.
+2. Specify the repositories keywords in the repo_name variable.
+3. Specify the name of csv file you want the results to be stored in the csv_name variable.
 
-default_fields global variable is not yet working, which means that when we connect to the API at a request, we access data for all properties rather than specific ones (such as login and id). Thus, we filter for those properties that we want when we write to the .csv file.
