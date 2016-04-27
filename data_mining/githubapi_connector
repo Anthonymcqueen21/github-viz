@@ -50,9 +50,9 @@ def main():
 
     with open(csv_name, "wb") as f_csv:
         writer = csv.writer(f_csv)
-        writer.writerow(["id", "name", "html_url", "forks", "stars", "size"])
+        writer.writerow(["id", "name", "html_url", "forks", "stars", "size", "language"])
         for repo in github_api.get_all_repositories(repo_name):
-            writer.writerow([repo['id'], repo['name'], repo['html_url'], repo['forks'], repo['watchers'], repo['size']])
+            writer.writerow([repo['id'], repo['name'], repo['html_url'], repo['forks'], repo['watchers'], repo['size'], repo['language']])
 
 
 if __name__ == '__main__':
