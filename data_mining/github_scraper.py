@@ -22,13 +22,13 @@ def scraping_page(url):
     else:
         num_pull_requests = -1
 
-    regex = findall(r'<a\s*data-pjax[^ ]*\s*href="[^ ]*">\s*<svg.*</svg>\s*<span[^>]*>\s*([0-9]+)\s*</span>\s*commit[s]*\s*</a>', html_str)
+    regex = findall(r'<li class="commits">\s*<a.*>\s*<svg.*\s*<span.*\s*([0-9]+)', html_str)
     if len(regex) > 0:
         num_commits = int(regex[0])
     else:
         num_commits = -1
 
-    regex = findall(r'<a\shref="[A-za-z]*.*\s*<svg\s.*>\s*<[a-z]*.+>\s*([0-9]+)\s*</span>\s*contributor[s]*\s*</a>', html_str)
+    regex = findall(r'<a\s*href="[A-za-z]*.*\s*<svg\s.*>\s*<[a-z]*.+>\s*([0-9]+)', html_str)
     if len(regex) > 0:
         num_contributors = int(regex[0])
     else:
