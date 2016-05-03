@@ -6,8 +6,8 @@ access_token = '71315f773eb1fb42260dc84712bee0ac7c844e73'   # put your github au
 per_page = 100  # repositories that we can fetch per request
 limit = 1000  # maximum number of repositories
 
-repo_name = 'pacman'  # keywords of the repositories we want to search for
-csv_name = 'Datnce.csv'
+repo_name = 'Data Visualization'  # keywords of the repositories we want to search for
+csv_name = 'Data_Visualization.csv'
 
 
 class GithubAPI(object):
