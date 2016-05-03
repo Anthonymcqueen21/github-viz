@@ -31,7 +31,7 @@ def scraping_page(url):
     else:
         num_commits = -1
 
-    return [num_commits]
+    return [num_watchers, num_pull_requests, num_commits]
 
 
 def main():
