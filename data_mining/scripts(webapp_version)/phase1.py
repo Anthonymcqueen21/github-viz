@@ -1,14 +1,14 @@
-import json
 import requests
 import csv
+import sys
 
 # Put your access token here
 access_token = '71315f773eb1fb42260dc84712bee0ac7c844e73'   # put your github authentication token here
 per_page = 100  # repositories that we can fetch per request
 limit = 1000  # maximum number of repositories
 
-repo_name = 'pacman'  # keywords of the repositories we want to search for
-csv_name = 'repo.csv'
+output_name = "phase1_output.csv"
+fields = ["id", "name", "html_url", "forks", "stargazers_count", "size", "language", "url", "created_at"]
 
 
 class GithubAPI(object):
@@ -44,15 +44,24 @@ class GithubAPI(object):
         print "We get " + str(total_items) + " items."
         return repositories
 
+    def get_num_of_repositories(self, keywords):
+        path = '/search/repositories?q=' + keywords
+        r = self.get_request(path, {})
+        return r['total_count']
+
+
 
 def main():
+    repo_name = sys.argv[1]
     github_api = GithubAPI()
 
-    with open(csv_name, "wb") as f_csv:
+    with open(output_name, "wb") as f_csv:
         writer = csv.writer(f_csv)
-        writer.writerow(["id", "name", "html_url", "forks", "stars", "size", "language"])
+        writer.writerow([github_api.get_num_of_repositories(repo_name)])
+        writer.writerow(fields)
         for repo in github_api.get_all_repositories(repo_name):
-            writer.writerow([repo['id'], repo['name'], repo['html_url'], repo['forks'], repo['watchers'], repo['size'], repo['language'], repo['contributors_url']])
+            res = [repo[i] for i in fields]
+            writer.writerow(res)
 
 
 if __name__ == '__main__':

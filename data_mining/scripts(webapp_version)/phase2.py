@@ -4,6 +4,9 @@ import urllib.request
 from re import findall
 import csv
 
+csv_name = "phase1_output.csv"
+output_name = "phase2_output.csv"
+
 
 def scraping_page(url):
     response = urllib.request.urlopen(url)
@@ -28,29 +31,23 @@ def scraping_page(url):
     else:
         num_commits = -1
 
-    regex = findall(r'<a\s*href="[A-za-z]*.*\s*<svg\s.*>\s*<[a-z]*.+>\s*([0-9]+)', html_str)
-    if len(regex) > 0:
-        num_contributors = int(regex[0])
-    else:
-        num_contributors = -1
-
-    return [num_watchers, num_pull_requests, num_contributors, num_commits]
+    return [num_commits]
 
 
 def main():
-    with open("repo.csv") as in_file:
-        with open("repo_with_scraping.csv", "w") as out_file:
+    with open(csv_name) as in_file:
+        with open(output_name, "w") as out_file:
             csv_writer = csv.writer(out_file)
             csv_reader = csv.reader(in_file)
+            next(csv_reader)
             first_line = True
             for line in csv_reader:
                 if first_line:
                     first_line = False
-                    csv_writer.writerow(line + ['watchers', 'pull_requests', 'contributors', 'commits'])
+                    csv_writer.writerow(line + ['watchers', 'pull_requests', 'commits'])
                 else:
                     scrape_result = scraping_page(line[2])
                     csv_writer.writerow(line + scrape_result)
-
 
 
 if __name__ == '__main__':
