@@ -1,0 +1,6 @@
+[README]
+
+1. Put your Github access token in the access_token variable.
+2. Specify the repositories keywords in the repo_name variable.
+3. Specify the name of csv file you want the results to be stored in the csv_name variable.
+
