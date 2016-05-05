@@ -35,12 +35,6 @@ html {
   padding-top:1cm;
 }
 
-#loading_gif{
-  position: absolute;
-  left: 25cm;
-  top: 41.8cm;
-}
-
 /* modify input elements */
 input{
     text-align:center;

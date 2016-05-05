@@ -27,6 +27,7 @@ public class MapsSparkServer implements SparkServer {
 
 		Spark.get("/", new MainHandler("main.ftl"), freeMarker);
 		Spark.post("/query", new QueryHandler());
+		Spark.get("/analysis", new QueryView("analysis.ftl"), freeMarker);
 
 	}
 
