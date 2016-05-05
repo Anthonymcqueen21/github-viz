@@ -6,7 +6,6 @@ $("#loading_gif").hide()
 $("form").submit(function(event) {
   event.preventDefault();
   var projectJSON = {"project" : $("textarea")[0].value}
-  $("textarea")[0].value = '';
   $("#loading_gif").dimBackground();
   $("#loading_gif").show();
   $.post("/query", projectJSON, function(response) {

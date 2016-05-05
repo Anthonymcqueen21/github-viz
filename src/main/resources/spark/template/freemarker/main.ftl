@@ -13,6 +13,7 @@
   </head>
   <body> 
     <CENTER>
+
       <p class="headline">
 
         <span>F e t c h</span>
@@ -33,12 +34,6 @@
      </p>
      <input type="submit" value="Submit">
      </form>
-
-<!--      <form id="new_project">
-        <input type="text" class="input_text" name="user_input" id="user_input" placeholder="<Enter any project idea here>">
-      </form>
- -->
-
 
 
     </CENTER>
