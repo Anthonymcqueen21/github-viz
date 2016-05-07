@@ -1,5 +1,10 @@
 package edu.brown.cs.fetch.frontend;
 
+import java.util.Map;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
+
 import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
@@ -12,7 +17,12 @@ class QueryHandler implements Route {
 		QueryParamsMap qm = request.queryMap();
 		String project = qm.value("project");
 		System.out.println(project);
-		return project;
+
+		Map<String, Object> data = ImmutableMap.<String, Object> builder()
+				.put("project_idea", project).build();
+
+		Gson GSON = new Gson();
+		return GSON.toJson(data);
 	}
 
 }

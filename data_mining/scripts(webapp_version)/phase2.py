@@ -4,8 +4,8 @@ import urllib.request
 from re import findall
 import csv
 
-csv_name = "phase1_output.csv"
-output_name = "phase2_output.csv"
+csv_name = "/Phase1Output/phase1_output.csv"
+output_name = "/Phase2Output/phase2_output.csv"
 
 
 def scraping_page(url):

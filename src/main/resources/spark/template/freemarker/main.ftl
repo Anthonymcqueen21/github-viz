@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<html class="loading">
   <head>
     <meta charset="utf-8">
     <title>${title}</title>
@@ -13,6 +13,7 @@
   </head>
   <body> 
     <CENTER>
+
       <p class="headline">
 
         <span>F e t c h</span>
@@ -25,21 +26,20 @@
       </a>
 
 
+
+      <img src="http://code.jquery.com/mobile/1.3.1/images/ajax-loader.gif" id="loading_gif">
+      <form>
       <p class="input_text">
        <textarea name="user_input" id="user_input" placeholder="<Enter any project idea here>"></textarea>
      </p>
-
-<!--      <form id="new_project">
-        <input type="text" class="input_text" name="user_input" id="user_input" placeholder="<Enter any project idea here>">
-      </form>
- -->
-
+     <input type="submit" value="Submit">
+     </form>
 
 
     </CENTER>
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://andywer.github.io/jquery-dim-background/jquery.dim-background.min.js"></script>
   </body>
   <!-- See http://html5boilerplate.com/ for a good place to start
        dealing with real world issues like old browsers.  -->

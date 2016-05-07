@@ -1,0 +1,15 @@
+Dependencies:
+
+For phase1.py:
+    pip install requests
+
+For google_trends_fetcher.py:
+    Just pip install pytrends (It should install requests, fake_useragent automatically for you)
+
+Usage:
+
+For phase1.py:
+    phase1.py <repo name>
+
+For google_trends_fetcher.py:
+    google_trends_fetcher.py <keywords>

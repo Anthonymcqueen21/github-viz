@@ -53,9 +53,12 @@ class GithubAPI(object):
 
 def main():
     repo_name = sys.argv[1]
+    if len(sys.argv) >= 2:
+        for argument in sys.argv[2:]:
+            repo_name += " " + argument
     github_api = GithubAPI()
 
-    with open(output_name, "wb") as f_csv:
+    with open("Phase1Output/" + output_name, "wb") as f_csv:
         writer = csv.writer(f_csv)
         writer.writerow([github_api.get_num_of_repositories(repo_name)])
         writer.writerow(fields)

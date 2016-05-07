@@ -1,0 +1,78 @@
+/* set background */
+html { 
+  background: url("gray_background.png") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.headline {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 560%;
+  color: white;
+  margin: 0;
+  padding-top: 9cm;
+}
+
+.headline_analysis {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 560%;
+  color: white;
+  margin: 0;
+  padding-top: 0.5cm;
+}
+
+.reg_text {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 240%;
+  color: white;
+  margin: 0;
+}
+
+.input_text {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 200%;
+  color: white;
+  margin: 0;
+  padding-top: 26cm;
+  padding-bottom: 12cm;
+}
+
+#scroll_button {
+  padding-top:1cm;
+}
+
+/* modify input elements */
+input{
+    text-align:center;
+}
+
+/* modify text input */
+textarea{
+	background: rgba(256, 256, 256, 0.2);
+	text-align:center;
+	line-height: 50px; 
+	height: 54px;
+	width: 800px;
+}
+
+::-webkit-input-placeholder {
+   text-align: center;
+   color: white;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align: center;  
+   color: white;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align: center;  
+   color: white;
+}
+
+:-ms-input-placeholder {  
+   text-align: center; 
+   color: white;
+}
