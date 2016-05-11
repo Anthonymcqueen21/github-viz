@@ -18,6 +18,7 @@ all_median_day = []
 def load_file(file_path):
     features = []
     languages = []
+    global top_languages
     with open(file_path + '_with_scraping.csv', 'r') as file_reader:
         reader = csv.reader(file_reader, delimiter=',', quotechar='"')
         next(reader)
@@ -29,7 +30,6 @@ def load_file(file_path):
                 if language != '':
                     all_languages[language] = 1
     top_languages = find_top_languages(all_languages,2)
-    print top_languages
 
     with open(file_path + '_with_scraping.csv', 'r') as file_reader:
         reader = csv.reader(file_reader, delimiter=',', quotechar='"')
@@ -94,13 +94,11 @@ def main():
 
     # Initialize the corresponding type of the classifier and train it (using 'fit')
     classifier = LogisticRegression()
-
-    # train the classifier
     classifier.fit(training_features, training_labels)
 
     # predict the language best used for today's purpose
     # format = [fork, pull_request, created_day, star]
-    print "we suggest you to use = " + str(classifier.predict([100, 100, 0, 100]))
+    print "we suggest you to use = " + top_languages[classifier.predict([100, 100, 0, 100])-1]
     print "coefficients of each weight = " + str(classifier.coef_)
 
     # print training mean accuracy using 'score'

@@ -69,7 +69,9 @@ def calculate_avg_stars(input):
         vals = input[k]
         avg.append(numpy.mean(vals))
         date_split = k.split('/')
-        dates.append(datetime.datetime(year=int(date_split[0]), month=int(date_split[1]), day=1))
+        #print k,numpy.mean(vals)
+        dates.append(date_split[1] + "/" + "1" + "/" + date_split[0]);
+        #dates.append(datetime.datetime(year=int(date_split[0]), month=int(date_split[1]), day=1))
     return (dates,avg)
 
 def output_csv(input,project):
@@ -135,6 +137,8 @@ def main():
 
     # calculate average stars over time
     (time_created, avg_stars_created) = calculate_avg_stars(created_day_bins)
+    print time_created
+    print avg_stars_created
     plt.bar(time_created, avg_stars_created, width=15, color="blue")
     plt.ylim(ymin=0)
     plt.ylabel('Average stars')
