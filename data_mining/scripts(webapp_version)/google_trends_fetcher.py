@@ -55,6 +55,7 @@ def main():
 
         with open("GoogleTrendsData/" + name + "/" + cleaned_csv_name, "w") as out_file:
             csv_writer = csv.writer(out_file)
+            csv_writer.writerow(['time', 'quantity'])
             for item in sorted(dates_mapping.items()):
                 csv_writer.writerow([item[0], item[1]])
 
