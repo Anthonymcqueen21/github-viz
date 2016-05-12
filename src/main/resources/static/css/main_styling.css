@@ -1,23 +1,25 @@
 /* set background */
 html { 
-  background: url("gray_background.png") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: #111111;
+}
+
+#logo {
+  position: absolute;
+  right: 0.5cm;
+  top: 0.5cm;
 }
 
 .headline {
   font-family: 'Noto Sans', sans-serif;
-  font-size: 560%;
+  font-size: 680%;
   color: white;
   margin: 0;
-  padding-top: 9cm;
+  padding-top: 3cm;
 }
 
 .reg_text {
   font-family: 'Ubuntu', sans-serif;
-  font-size: 240%;
+  font-size: 280%;
   color: white;
   margin: 0;
 }
@@ -31,6 +33,20 @@ html {
   padding-bottom: 12cm;
 }
 
+.blue {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 200%;
+  color: #55D6FF;
+}
+
+#title {
+  padding-top: 4.5cm;
+}
+
+#logins {
+  padding-top: 3cm;
+}
+
 #scroll_button {
   padding-top:1cm;
 }
@@ -38,7 +54,7 @@ html {
 #loading_gif{
   position: absolute;
   left: 25cm;
-  top: 41.8cm;
+  top: 49cm;
 }
 
 /* modify input elements */
@@ -48,11 +64,17 @@ input{
 
 /* modify text input */
 textarea{
-	background: rgba(256, 256, 256, 0.2);
+	background: rgba(17, 17, 17, 0.2);
 	text-align:center;
 	line-height: 50px; 
 	height: 54px;
 	width: 800px;
+  border-style: solid;
+  border-color: #55D6FF;
+}
+
+textarea:focus{
+  outline: none;
 }
 
 ::-webkit-input-placeholder {

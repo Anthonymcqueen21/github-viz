@@ -13,6 +13,10 @@
   </head>
   <body> 
     <CENTER>
+      <a href="http://localhost:4567/"><img src="logo.png" id="logo" height="140" width="140"></a>
+
+      <p class="blue" id="title">CSCI 1951-A: DATA SCIENCE FINAL PROJECT
+      </p>
 
       <p class="headline">
 
@@ -21,9 +25,12 @@
       <span class="blinking-cursor">|</span>
 
       </p>
-      <p class="reg_text">committed to push you in the right direction</p>
+      <p class="reg_text">to <code>git fetch</code>-ed</p>
       <a href="#user_input" ><img href="#user_input" class="animate-flicker" id="scroll_button" src="http://250greatminds.leeds.ac.uk/wp-content/themes/250-fellows/assets/img/down_arrow.png" style="width:50px;height:50px;">
       </a>
+
+      <p class="blue" id="logins">ipetrov | lnguyen9 | tcitra | xy24
+      </p>
 
 
 

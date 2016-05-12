@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    var idea = document.getElementById("idea").innerHTML;
     var margin = {top: 40, right: 50, bottom: 50, left: 50},
         width = 750 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
@@ -31,12 +32,13 @@ $(document).ready(function() {
 
     var maxy = 0;
     var min_date = -1;
-    d3.csv("2048_trend_cleaned.csv", function(error, data) {
+    d3.csv("google_trend_cleaned.csv", function(error, data) {
         tmp = d3.max(data, function(data) {return parseInt(data.quantity);});
         if (tmp > maxy) {
             maxy = tmp
         }
-        d3.csv("2048_day_created.csv", function(error, data) {
+        d3.csv("day_created.csv", function(error, data) {
+            console.log(data)
             tmp = d3.max(data, function(data) {return parseInt(data.quantity);});
             if (tmp > maxy) {
                 maxy = tmp
@@ -46,7 +48,7 @@ $(document).ready(function() {
 
             // Visualize the Google Trend here, because we just get the min_date to filter
             // out some data
-            d3.csv("2048_trend_cleaned.csv", type2, function(error, data) {
+            d3.csv("google_trend_cleaned.csv", type2, function(error, data) {
                 if (error) throw error;
 
                 data = data.filter(function(d) {
@@ -63,7 +65,7 @@ $(document).ready(function() {
         });
     });
 
-    d3.csv("2048_day_created.csv", type2, function(error, data) {
+    d3.csv("day_created.csv", type, function(error, data) {
         if (error) throw error;
 
         x.domain(d3.extent(data, function(d) { return d.time; }));
@@ -81,18 +83,13 @@ $(document).ready(function() {
             .attr("transform", "rotate(-90)")
             .attr("y", 6)
             .attr("dy", ".71em")
-            .style("fill", "white")
-            .style("text-anchor", "end")
-            .text("Popularity");
+            .style("fill", "white");
 
         svg.append("path")
             .datum(data)
             .attr("class", "line2")
             .attr("d", line);
-    });
 
-
-<<<<<<< HEAD
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
@@ -102,6 +99,8 @@ $(document).ready(function() {
 
     svg.append("g")
         .attr("class", "y axis")
+        .attr("fill", "white")
+        .attr("font-size", "12px")
         .call(yAxis)
         .append("text")
         .attr("transform", "rotate(-90)")
@@ -118,7 +117,7 @@ $(document).ready(function() {
         .attr("d", line);
 });
 
-d3.csv("2048_trend_cleaned.csv", type, function(error, data) {
+d3.csv("google_trend_cleaned.csv", type, function(error, data) {
     if (error) throw error;
     svg.append("path")
         .datum(data)
@@ -126,8 +125,8 @@ d3.csv("2048_trend_cleaned.csv", type, function(error, data) {
         .attr("d", line);
 });
 
-var colors = [ ["Google Trend", "steelblue"],
-    ["GitHub", "darkred"] ];
+var colors = [ ["GitHub", "#55D6FF"],
+    ["Google Trend", "green"] ];
 
 var legend = svg.append("g")
     .attr("class", "legend")
@@ -153,8 +152,8 @@ legendRect
     .style("fill", function(d) {
         return d[1];
     });
-    var colors = [ ["Google Trend", "steelblue"],
-        ["GitHub", "darkred"] ];
+    var colors = [ ["GitHub", "#55D6FF"],
+        ["Google Trend", "green"] ];
 
     var legend = svg.append("g")
         .attr("class", "legend")
@@ -184,12 +183,13 @@ legendRect
     legendText.enter()
         .append("text")
         .attr("x", width - 52)
-        .style('fill','white');
+        .style("fill","white");
 
     legendText
         .attr("y", function(d, i) {
             return i * 20 + 9;
         })
+        .style("fill","white")
         .text(function(d) {
             return d[0];
         });

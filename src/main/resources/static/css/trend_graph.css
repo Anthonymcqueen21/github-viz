@@ -6,12 +6,12 @@
 
 .line2 {
     fill: none;
-    stroke: darkred;
+    stroke: #55D6FF;
     stroke-width: 3px;
 }
 
 .line {
     fill: none;
-    stroke: steelblue;
+    stroke: green;
     stroke-width: 3px;
 }

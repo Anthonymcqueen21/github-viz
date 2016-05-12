@@ -11,6 +11,12 @@ h1 {
   letter-spacing: 3px;
 }
 
+#logo {
+  position: absolute;
+  right: 0.5cm;
+  top: 0.5cm;
+}
+
 .headline {
   font-family: 'courier', sans-serif;
   font-size: 400%;
@@ -62,20 +68,25 @@ h1 {
 
 #section_header {
   margin-top: -50px;
+  font-weight: normal;
 }
 
 #recommendation {
   width: 20%;
   height: 20%;
-  left: 12.5%;
+  left: 22%;
   top: 75%;
   display: block;
+  position: absolute;
 }
 
 #h_recommendation {
   margin-left: 12.5%;
-  margin-top: 5%;
-  font-size: 400%;
+  margin-top: 6%;
+  font-size: 450%;
+  font-weight: normal;
+  top: 65%;
+  position:absolute;
 }
 
 .reg_text {
@@ -96,6 +107,28 @@ h1 {
 
 #scroll_button {
   padding-top:1cm;
+}
+
+#left {
+  position: absolute;
+  right: 21cm;
+  top: 11.6cm;
+}
+
+#right {
+  position: absolute;
+  right: 17cm;
+  top: 11.6cm;
+}
+
+#pie_option {
+  font-family: 'Oswald';
+  font-size: 300%;
+  font-weight: normal;
+  color: white;
+  position: absolute;
+  top: 10.8cm;
+  right: 18.95cm;
 }
 
 /* modify input elements */

@@ -10,7 +10,6 @@ from sklearn.feature_extraction import DictVectorizer
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn import cross_validation
 from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import PolynomialFeatures
 
 # global variables
 created_days = []			# days since date created
@@ -20,7 +19,7 @@ all_lang = {}
 def load_file(file_path):
     stars = []
     features = []
-    with open(file_path + '_with_scraping.csv', 'r') as file_reader:
+    with open(file_path, 'r') as file_reader:
         reader = csv.reader(file_reader, delimiter=',', quotechar='"')
         next(reader)
         for row in reader:
@@ -62,19 +61,45 @@ def find_days_elapsed(d0):
     delta = d1 - d0
     return -delta.days
 
-def calculate_avg_stars(input):
+def output_avg_stars_csv(input,project):
+    output = {}
     dates = []
-    avg = []
+    avg_stars = []
+
     for k in input:
         vals = input[k]
-        avg.append(numpy.mean(vals))
-        date_split = k.split('/')
-        #print k,numpy.mean(vals)
-        dates.append(date_split[1] + "/" + "1" + "/" + date_split[0]);
-        #dates.append(datetime.datetime(year=int(date_split[0]), month=int(date_split[1]), day=1))
-    return (dates,avg)
+        output[k] = (numpy.mean(vals))
 
-def output_csv(input,project):
+    with open(project + '_avg_stars.csv', 'w') as f:
+        w = csv.writer(f)
+        w.writerow(['time', 'avg_stars']);
+        for k in sorted(output, key=lambda x: datetime.datetime.strptime(x, '%Y/%m')):
+            w.writerow([str(k), output[k]])
+            date_split = k.split('/')
+            avg_stars.append(output[k])
+            dates.append(datetime.datetime(year=int(date_split[0]), month=int(date_split[1]), day=1))
+
+    # generate chart of average stars
+    plt.bar(dates, avg_stars, width=15, color="blue")
+    plt.ylim(ymin=0)
+    plt.ylabel('Average stars')
+    plt.xlabel('Time created')
+    plt.title('Average stars since day created, for project ' + project)
+
+    # best fit line to determine the star potential rating
+    numdate = mdates.date2num(dates)
+    z = numpy.polyfit(numdate, avg_stars, 1)
+    p = numpy.poly1d(z)
+    trendline = plt.plot(numdate, p(numdate))
+    plt.setp(trendline, color='r', linewidth=2.0)
+    plt.ylim(ymin=0)
+    plt.show()
+    print "best fit line for star potential = {0}x + {1}".format(*z)
+
+    # return the value of best fit line for recommendation purpose
+    print z[0]
+
+def output_dates_csv(input,project):
     output = {}
     for k in input:
         num_project = len(input[k])
@@ -91,7 +116,7 @@ def output_csv(input,project):
             num_project.append(output[k])
             dates.append(datetime.datetime(year=int(date_split[0]), month=int(date_split[1]), day=1))
 
-    # generate charts of popularity
+    # generate chart of popularity
     plt.bar(dates, num_project, width=15, color="blue")
     plt.xlabel('Time created')
     plt.ylabel('Number of Project')
@@ -104,6 +129,9 @@ def output_csv(input,project):
     plt.ylim(ymin=0)
     plt.show()
     print "best fit line for project popularity = {0}x + {1}".format(*z)
+
+    # return the value of best fit line for recommendation purpose
+    print z[0]
 
 def main():
     parser = argparse.ArgumentParser()
@@ -119,41 +147,12 @@ def main():
     train_data = load_file(opts.training)
     training_labels = train_data[0]
     training_features = train_data[1]
-    poly = PolynomialFeatures(degree=7)
-    training_features = poly.fit_transform(training_features)
-
-    # Initialize the corresponding type of the classifier and train it (using 'fit')
-    classifier = LogisticRegression()
-
-    # train the classifier
-    classifier.fit(training_features, training_labels)
-
-    # print training mean accuracy using 'score'
-    #print('Coefficients: \n', classifier.coef_)
-    #print "training mean accuracy = " + str(classifier.score(training_features, training_labels))
 
     # group projects based on the month created, output to csv and visualize the plot
-    output_csv(created_day_bins, opts.training)
+    output_dates_csv(created_day_bins, opts.training)
 
-    # calculate average stars over time
-    (time_created, avg_stars_created) = calculate_avg_stars(created_day_bins)
-    print time_created
-    print avg_stars_created
-    plt.bar(time_created, avg_stars_created, width=15, color="blue")
-    plt.ylim(ymin=0)
-    plt.ylabel('Average stars')
-    plt.xlabel('Time created')
-    plt.title('Average stars since day created, for project ' + opts.training)
-
-    # best fit line to determine the star potential rating
-    numdate = mdates.date2num(time_created)
-    z = numpy.polyfit(numdate, avg_stars_created, 1)
-    p = numpy.poly1d(z)
-    trendline = plt.plot(numdate, p(numdate))
-    plt.setp(trendline, color='r', linewidth=2.0)
-    plt.ylim(ymin=0)
-    plt.show()
-    print "best fit line for star potential = {0}x + {1}".format(*z)
+    # calculate average stars over time and output the files as csv
+    output_avg_stars_csv(created_day_bins, opts.training)
 
 if __name__ == '__main__':
     main()

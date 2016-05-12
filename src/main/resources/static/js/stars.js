@@ -3,17 +3,13 @@ $(document).ready(function() {
 	    width = 500 - margin.left - margin.right,
 	    height = 400 - margin.top - margin.bottom;
 
-	var x = d3.scale.linear()
+	var x = d3.time.scale()
 	    .range([0, width]);
 
 	var y = d3.scale.linear()
 	    .range([height, 0]);
 
 	var color = d3.scale.category10();
-
-	var xAxis = d3.svg.axis()
-	    .scale(x)
-	    .orient("bottom");
 
 	var yAxis = d3.svg.axis()
 	    .scale(y)
@@ -25,38 +21,41 @@ $(document).ready(function() {
 	  	.append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	d3.tsv("data.tsv", function(error, data) {
+	d3.csv("avg_stars.csv", function(error, data) {
 	  if (error) throw error;
 
-	  data.forEach(function(d) {
-	    d.sepalLength = +d.sepalLength;
-	    d.sepalWidth = +d.sepalWidth;
-	  });
+	  y.domain(d3.extent(data, function(d) { return d.avg_stars; })).nice();
 
-	  x.domain(d3.extent(data, function(d) { return d.sepalWidth; })).nice();
-	  y.domain(d3.extent(data, function(d) { return d.sepalLength; })).nice();
+    var parseDate = d3.time.format("%Y/%m").parse;
+    var mindate = parseDate(data[0]['time']),
+        maxdate = parseDate(data[data.length-1]['time']);
 
-	  svg_stars.append("g")
-	      .attr("class", "x axis")
-	      .attr("transform", "translate(0," + height + ")")
-	      .call(xAxis)
-	    .append("text")
-	      .attr("class", "label")
+    var x = d3.time.scale()
+      .domain([mindate, maxdate])
+      .range([0, width]);
+
+    var xAxis = d3.svg.axis()
+	    .scale(x)
+	    .orient("bottom");
+
+    svg_stars.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
         .attr("fill", "white")
-        .attr("font-size", "15px")
-	      .attr("x", width)
-	      .attr("y", -6)
-	      .style("text-anchor", "end");
+        .attr("font-size", "12px")
+        .call(xAxis);
 
 	  svg_stars.append("g")
 	      .attr("class", "y axis")
+	      .attr("fill", "white")
+          .attr("font-size", "12px")
 	      .call(yAxis)
 	    .append("text")
 	      .attr("class", "label")
 	      .attr("transform", "rotate(-90)")
 	      .attr("y", 6)
 	      .attr("dy", ".71em")
-        .attr("fill", "white")
+        .style("fill", "white")
         .attr("font-size", "15px")
 	      .style("text-anchor", "end")
 	      .text("Average Stars")
@@ -65,29 +64,9 @@ $(document).ready(function() {
 	      .data(data)
 	    .enter().append("circle")
 	      .attr("class", "dot")
-	      .attr("r", 3.5)
-	      .attr("cx", function(d) { return x(d.sepalWidth); })
-	      .attr("cy", function(d) { return y(d.sepalLength); })
-	      .style("fill", function(d) { return color(d.species); });
-
-	  var legend = svg_stars.selectAll(".legend")
-	      .data(color.domain())
-	    .enter().append("g")
-	      .attr("class", "legend")
-	      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-	  legend.append("rect")
-	      .attr("x", width - 18)
-	      .attr("width", 18)
-	      .attr("height", 18)
-	      .style("fill", color);
-
-	  legend.append("text")
-	      .attr("x", width - 24)
-	      .attr("y", 9)
-	      .attr("dy", ".35em")
-	      .style("text-anchor", "end")
-	      .text(function(d) { return d; });
-
+	      .attr("r", 2.5)
+	      .attr("cx", function(d) { return x(parseDate(d.time)); })
+	      .attr("cy", function(d) { return y(d.avg_stars); })
+	      .style("fill", "#00a1ff");
 	})
 });

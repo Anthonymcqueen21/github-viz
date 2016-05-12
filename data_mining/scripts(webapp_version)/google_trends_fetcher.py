@@ -35,9 +35,9 @@ def main():
     time.sleep(randint(5, 10))
 
     # download file
-    connector.save_csv(path, csv_name)
+    connector.save_csv("../../src/main/resources/static/", "google_trend")
 
-    with open("GoogleTrendsData/" + name + "/" + csv_name + ".csv") as in_file:
+    with open("../../src/main/resources/static/google_trend.csv") as in_file:
         csv_reader = csv.reader(in_file)
 
         for i in range(5):
@@ -53,7 +53,7 @@ def main():
             start_month = start_dates[1]
             dates_mapping[start_year + "/" + start_month] += int(line[1])
 
-        with open("GoogleTrendsData/" + name + "/" + cleaned_csv_name, "w") as out_file:
+        with open("../../src/main/resources/static/google_trend_cleaned.csv", "w") as out_file:
             csv_writer = csv.writer(out_file)
             csv_writer.writerow(['time', 'quantity'])
             for item in sorted(dates_mapping.items()):

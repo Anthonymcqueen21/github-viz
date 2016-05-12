@@ -97,7 +97,6 @@ def main():
     classifier.fit(training_features, training_labels)
 
     # predict the language best used for today's purpose
-    # format = [fork, pull_request, created_day, star]
     print "we suggest you to use = " + top_languages[classifier.predict([100, 100, 0, 100])-1]
     print "coefficients of each weight = " + str(classifier.coef_)
 
