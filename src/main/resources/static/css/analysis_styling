@@ -1,18 +1,22 @@
 /* set background */
 html { 
-  background: url("gray_background.png") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background-color: black;
 }
 
 .headline {
-  font-family: 'Noto Sans', sans-serif;
-  font-size: 560%;
+  font-family: 'courier', sans-serif;
+  font-size: 400%;
   color: white;
-  margin: 0;
+  margin-left: 2.5%;
   padding-top: 9cm;
+  font-weight: bold;
+}
+
+.search_result {
+  font-family: 'Ubuntu';
+  font-size: 100%;
+  color: white;
+  margin-left: 3%;
 }
 
 .reg_text {

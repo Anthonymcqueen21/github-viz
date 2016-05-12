@@ -1,7 +1,9 @@
-
-var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
+$(document).ready(function() {
+var margin = {top: 40, right: 50, bottom: 50, left: 50},
+    width = 750 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
+
+console.log("width = " + width)
 
 var formatDate = d3.time.format("%Y/%m");
 
@@ -23,7 +25,7 @@ var line = d3.svg.line()
     .x(function(d) { return x(d.time); })
     .y(function(d) { return y(d.quantity); });
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#trend").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -62,6 +64,7 @@ d3.csv("2048_day_created.csv", type, function(error, data) {
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", ".71em")
+        .style("fill", "white")
         .style("text-anchor", "end")
         .text("Popularity");
 
@@ -73,8 +76,6 @@ d3.csv("2048_day_created.csv", type, function(error, data) {
 
 d3.csv("2048_trend_cleaned.csv", type, function(error, data) {
     if (error) throw error;
-
-
     svg.append("path")
         .datum(data)
         .attr("class", "line")
@@ -82,7 +83,7 @@ d3.csv("2048_trend_cleaned.csv", type, function(error, data) {
 });
 
 var colors = [ ["Google Trend", "steelblue"],
-    ["Github", "darkred"] ];
+    ["GitHub", "darkred"] ];
 
 var legend = svg.append("g")
     .attr("class", "legend")
@@ -113,7 +114,8 @@ var legendText = legend.selectAll('text').data(colors);
 
 legendText.enter()
     .append("text")
-    .attr("x", width - 52);
+    .attr("x", width - 52)
+    .style('fill','white');
 
 legendText
     .attr("y", function(d, i) {
@@ -123,9 +125,9 @@ legendText
         return d[0];
     });
 
-
 function type(d) {
     d.time = formatDate.parse(d.time);
     d.quantity = d.quantity;
     return d;
 }
+});
