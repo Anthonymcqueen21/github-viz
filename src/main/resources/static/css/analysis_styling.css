@@ -111,14 +111,14 @@ h1 {
 
 #left {
   position: absolute;
-  right: 21cm;
-  top: 11.5cm;
+  right: 41.3%;
+  top: 42.2%;
 }
 
 #right {
   position: absolute;
-  right: 17cm;
-  top: 11.5cm;
+  right: 32%;
+  top: 41.9%;
 }
 
 #pie_option {
@@ -127,8 +127,8 @@ h1 {
   font-weight: normal;
   color: white;
   position: absolute;
-  top: 10.7cm;
-  right: 18.95cm;
+  top: 39%;
+  right: 36.2%;
 }
 
 /* modify input elements */
