@@ -68,7 +68,8 @@ d3.csv("2048_day_created.csv", type, function(error, data) {
         .attr("dy", ".71em")
         .attr("fill", "white")
         .attr("font-size", "15px")
-        .style("text-anchor", "end");
+        .style("text-anchor", "end")
+        .text("Popularity");
 
     svg.append("path")
         .datum(data)
