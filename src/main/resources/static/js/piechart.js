@@ -34,14 +34,6 @@ $(document).ready(function() {
       document.getElementById("pie_option").innerHTML = optionList[csvIndex];
   });
 
-
-
-
-
-
-
-
-
 });
 
 
@@ -53,7 +45,11 @@ var funct = (function(d3, num) {
   var donutWidth = 75;
   var legendRectSize = 18;
   var legendSpacing = 4;
-  var color = d3.scale.category20b();
+  // var color = d3.scale.category20b();
+
+  var color = d3.scale.ordinal()
+    .domain([])
+    .range(colorbrewer.Paired[10]);
 
   var svg_language = d3.select('#language')
     .append('svg')
@@ -92,6 +88,8 @@ var funct = (function(d3, num) {
       .append('path')
       .attr('d', arc)
       .attr('fill', function(d, i) { 
+        console.log(d.data);
+        console.log(d.data.language);
         return color(d.data.language); 
       })                                                        // UPDATED (removed semicolon)
       .each(function(d) { this._current = d; });                // NEW
@@ -122,6 +120,7 @@ var funct = (function(d3, num) {
       .append('g')
       .attr('class', 'legend')
       .attr('transform', function(d, i) {
+        console.log(color.domain());
         var height = legendRectSize + legendSpacing;
         var offset =  height * color.domain().length / 2;
         var horz = -300;

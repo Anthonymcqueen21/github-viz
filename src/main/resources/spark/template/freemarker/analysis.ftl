@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/trend_graph.css">
     <link rel="stylesheet" href="css/stars_graph.css">
     <link rel="stylesheet" href="css/piechart_graph.css">
+    <link rel="stylesheet" href="css/colorbrewer.css">
   </head>
   <body> 
     <a href="http://localhost:4567/"><img src="logo.png" id="logo" height="140" width="140"></a>
@@ -49,5 +50,6 @@
     <script src="js/stars.js"></script>
     <script src="js/piechart.js"></script>
     <script src="js/recommendation.js"></script>
+    <script src="js/colorbrewer.js"></script>
   </body>
 </html>

@@ -112,13 +112,13 @@ h1 {
 #left {
   position: absolute;
   right: 21cm;
-  top: 11.6cm;
+  top: 11.5cm;
 }
 
 #right {
   position: absolute;
   right: 17cm;
-  top: 11.6cm;
+  top: 11.5cm;
 }
 
 #pie_option {
@@ -127,7 +127,7 @@ h1 {
   font-weight: normal;
   color: white;
   position: absolute;
-  top: 10.8cm;
+  top: 10.7cm;
   right: 18.95cm;
 }
 
