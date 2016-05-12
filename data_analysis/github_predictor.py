@@ -19,7 +19,7 @@ def load_file(file_path):
     features = []
     languages = []
     global top_languages
-    with open(file_path + '_with_scraping.csv', 'r') as file_reader:
+    with open(file_path, 'r') as file_reader:
         reader = csv.reader(file_reader, delimiter=',', quotechar='"')
         next(reader)
         for row in reader:
@@ -31,7 +31,7 @@ def load_file(file_path):
                     all_languages[language] = 1
     top_languages = find_top_languages(all_languages,2)
 
-    with open(file_path + '_with_scraping.csv', 'r') as file_reader:
+    with open(file_path, 'r') as file_reader:
         reader = csv.reader(file_reader, delimiter=',', quotechar='"')
         next(reader)
         for row in reader:
@@ -78,17 +78,8 @@ def find_top_languages(languages,numTop):
     return sorted_lang[0:numTop]
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-training', required=True, help='Path to training data')
-    parser.add_argument('-test', help='Path to test data')
-    parser.add_argument('-c', '--classifier', default='nb', help='nb | log | svm')
-    parser.add_argument('-top', type=int, help='Number of top features to show')
-    parser.add_argument('-p', type=bool, default='', help='If true, prints out information')
-    opts = parser.parse_args()
-    # Note: anytime the print flag is set to '', you should not print anything out!
-
     # Load training text and training labels
-    train_data = load_file(opts.training)
+    train_data = load_file('Phase1Output/phase1_output.csv')
     training_labels = train_data[0]
     training_features = train_data[1]
 
@@ -97,7 +88,8 @@ def main():
     classifier.fit(training_features, training_labels)
 
     # predict the language best used for today's purpose
-    print "we suggest you to use = " + top_languages[classifier.predict([100, 100, 0, 100])-1]
+    suggested_language = top_languages[classifier.predict([100, 100, 0, 100])-1]
+
     print "coefficients of each weight = " + str(classifier.coef_)
 
     # print training mean accuracy using 'score'
@@ -112,6 +104,11 @@ def main():
 
     print "5-fold cross validation mean accuracy = " + str(mean_cv)
     print "5-fold cross validation std. deviation accuracy = " + str(std_cv)
+
+    with open('../../src/main/resources/static/rating.csv', 'w') as f:
+        w = csv.writer(f)
+        w.writerow(['language', 'score'])
+        w.writerow([suggested_language, str(mean_cv)])
 
 if __name__ == '__main__':
     main()

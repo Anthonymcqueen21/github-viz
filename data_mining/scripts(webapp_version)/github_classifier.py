@@ -85,7 +85,7 @@ def output_avg_stars_csv(input):
     print "best fit line for star potential = {0}x + {1}".format(*z)
 
     # return the value of best fit line for recommendation purpose
-    return z[0], max(output.values())
+    return z[0], numpy.mean(output.values())
 
 def output_dates_csv(input):
     output = {}
@@ -123,9 +123,9 @@ def main():
 
     # group projects based on the month created, output to csv and visualize the plot
     coef_trend = output_dates_csv(created_day_bins)
-    if coef_trend >= 0.003:
+    if coef_trend >= 0.000255:
         trend = 'rising star'
-    elif coef_trend <= -0.001:
+    elif coef_trend <= -0.0001:
         trend = 'once-famous'
     else:
         trend = 'the classic'

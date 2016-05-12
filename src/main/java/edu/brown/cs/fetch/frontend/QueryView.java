@@ -82,15 +82,23 @@ public class QueryView implements TemplateViewRoute {
 				    	printout.setInteger(generateLanguage());
 				    }
 				};
+				
+		    	Thread thread13 = new Thread(printout) {
+				    public void run() {
+				    	runPredictor();
+				    }
+				};
 		    	
 				// Start the threads.
 				thread11.start();
 				thread12.start();
+				thread13.start();
 		    	
 				// Wait for the two threads to finish
 				try {
 					thread11.join();
 					thread12.join();
+					thread13.join();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 					System.out.println("ERROR: Problem joining threads.");
@@ -269,6 +277,44 @@ public class QueryView implements TemplateViewRoute {
 		System.out.println(sb.toString());
 		
 		return minYear;
+	}
+	
+	private static void runPredictor() {
+		File file = new File(System.getProperty("user.dir")
+				+ "/data_mining/scripts(webapp_version)");
+		
+		System.out.println("Now executing:");
+		System.out.println("python github_predictor.py");
+		
+		Process p = null;
+		try {
+			p = Runtime.getRuntime().exec("python github_predictor.py", null, file);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("ERROR: Problem executing the github_predictor.py file.");
+		}
+		try {
+			p.waitFor();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			System.out.println("ERROR: Problem waiting for another thread.");
+		}
+		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				p.getInputStream()));
+
+		StringBuilder sb = new StringBuilder();
+		String line = "";
+		try {
+			while ((line = reader.readLine()) != null) {
+				sb.append(line + "\n");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("ERROR: Problem reading from the BufferedReader.");
+		}
+		
+		System.out.println(sb.toString());
 	}
 	
 	private static void runGoogleTrendsFetcher(String idea) {

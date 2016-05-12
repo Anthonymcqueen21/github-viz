@@ -131,7 +131,7 @@ var colors = [ ["GitHub", "#55D6FF"],
 var legend = svg.append("g")
     .attr("class", "legend")
     //.attr("x", w - 65)
-    //.attr("y", 50)
+    // .attr("y", 100)
     .attr("height", 100)
     .attr("width", 100)
     .attr('transform', 'translate(-20,50)');
