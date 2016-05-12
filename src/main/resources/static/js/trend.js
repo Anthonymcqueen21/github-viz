@@ -55,6 +55,8 @@ d3.csv("2048_day_created.csv", type, function(error, data) {
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
+        .attr("fill", "white")
+        .attr("font-size", "15px")
         .call(xAxis);
 
     svg.append("g")
@@ -64,9 +66,9 @@ d3.csv("2048_day_created.csv", type, function(error, data) {
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", ".71em")
-        .style("fill", "white")
-        .style("text-anchor", "end")
-        .text("Popularity");
+        .attr("fill", "white")
+        .attr("font-size", "15px")
+        .style("text-anchor", "end");
 
     svg.append("path")
         .datum(data)

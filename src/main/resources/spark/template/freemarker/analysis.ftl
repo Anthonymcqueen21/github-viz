@@ -17,13 +17,21 @@
     </p>
     <p class="search_result">1,000 projects with keyword: ${idea}</p>
 
+    <div class="section" id="trend">
+      <h1 id="section_header">POPULARITY</h1>
+    </div>
+    
+    <div class="section" id="language">
+      <h1 id="section_header">LANGUAGES</h1>
+    </div>
 
-    <h1>POPULARITY</h1>
-    <div class="section" id="trend"></div>
+    <div class="section" id="star">
+      <h1 id="section_header">STARS</h1>
+    </div>
 
-    <div class="section" id="language"></div>
-    <div class="section" id="star"></div>
-    <div class="section" id="recommendation"></div>
+    <div class="section" id="recommendation">
+      <h1 id="h_recommendation">FETCH<br>SAYS...</h1>
+    </div>
 
     <script src="js/jquery-2.1.1.js"></script>
     <script src="//d3js.org/d3.v3.min.js"></script>
